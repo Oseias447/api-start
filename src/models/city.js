@@ -8,11 +8,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     } 
   }, {});
-  City.associate = function(models) {
-    City.belongsTo(models.Province, {
-      foreignKey: 'prov_code',
-      targetKey: 'prov_code'
-    });
-  };
+  
   return City;
 };

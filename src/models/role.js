@@ -5,12 +5,5 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     } 
   }, {});
-  Role.associate = function(models) {
-    Role.belongsToMany(models.User, {
-      through: 'UserRole',
-      as: 'users',
-      foreignKey: 'role_id'
-    });
-  };
   return Role;
 };

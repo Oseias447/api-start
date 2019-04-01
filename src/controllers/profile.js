@@ -1,5 +1,6 @@
-const Profile = require('../models').Profile;
-const User = require('../models').User;
+const db = require('../config/db.js');
+const Profile = db.profile;
+const User = db.user;
 
 module.exports = {
   list(req, res) {
@@ -16,7 +17,7 @@ module.exports = {
 
   getById(req, res) {
     return Profile
-      .findById(req.params.id, {
+      .findByPk(req.params.id, {
         include: [{
           model: User,
           as: 'user'
@@ -48,7 +49,7 @@ module.exports = {
 
   update(req, res) {
     return Profile
-      .findById(req.params.id, {
+      .findByPk(req.params.id, {
         include: [{
           model: User,
           as: 'user'
@@ -76,7 +77,7 @@ module.exports = {
 
   delete(req, res) {
     return Profile
-      .findById(req.params.id)
+      .findByPk(req.params.id)
       .then(profile => {
         if (!profile) {
           return res.status(400).send({

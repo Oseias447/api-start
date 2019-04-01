@@ -1,5 +1,6 @@
-const Role = require('../models').Role;
-const User = require('../models').User;
+const db = require('../config/db.js');
+const Role = db.role;
+const User = db.user;
 
 module.exports = {
   list(req, res) {
@@ -44,7 +45,7 @@ module.exports = {
 
   addUser(req, res) {
     return Role
-      .findById(req.body.role_id, {
+      .findByPk(req.body.role_id, {
         include: [{
           model: User,
           as: 'users'
@@ -56,7 +57,7 @@ module.exports = {
             message: 'Role Not Found',
           });
         }
-        User.findById(req.body.role_id).then((course) => {
+        User.findByPk(req.body.role_id).then((course) => {
           if (!course) {
             return res.status(404).send({
               message: 'User Not Found',
@@ -71,7 +72,7 @@ module.exports = {
 
   update(req, res) {
     return Role
-      .findById(req.params.id, {
+      .findByPk(req.params.id, {
         include: [{
           model: User,
           as: 'users'
@@ -95,7 +96,7 @@ module.exports = {
 
   delete(req, res) {
     return Role
-      .findById(req.params.id)
+      .findByPk(req.params.id)
       .then(role => {
         if (!role) {
           return res.status(400).send({

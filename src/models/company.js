@@ -11,11 +11,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     } 
   }, {});
-  Company.associate = function(models) {
-    Company.hasMany(models.Branch, {
-      foreignKey: 'company_id',
-      as: 'branches'
-    });
-  };
+ 
   return Company;
 };

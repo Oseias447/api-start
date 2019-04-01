@@ -1,7 +1,8 @@
-const User = require('../models').User;
-const Profile = require('../models').Profile;
-const Role = require('../models').Role;
-const UserRole = require('../models').UserRole;
+const db = require('../config/db.js');
+const User = db.user;
+const Profile = db.profile;
+const Role = db.role;
+const UserRole = db.userRole;
 
 module.exports = {
   add(req, res) {

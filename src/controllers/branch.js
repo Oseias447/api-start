@@ -1,5 +1,6 @@
-const Branch = require('../models').Branch;
-const Company = require('../models').Company;
+const db = require('../config/db.js');
+const Company = db.company;
+const Branch = db.Branch;
 
 module.exports = {
   list(req, res) {
@@ -16,7 +17,7 @@ module.exports = {
 
   getById(req, res) {
     return Branch
-      .findById(req.params.id, {
+      .findByPk(req.params.id, {
         include: [{
           model: Company,
           as: 'company'
@@ -47,7 +48,7 @@ module.exports = {
 
   update(req, res) {
     return Branch
-      .findById(req.params.id, {
+      .findByPk(req.params.id, {
         include: [{
           model: Company,
           as: 'company'
@@ -73,7 +74,7 @@ module.exports = {
 
   delete(req, res) {
     return Branch
-      .findById(req.params.id)
+      .findByPk(req.params.id)
       .then(branch => {
         if (!branch) {
           return res.status(400).send({

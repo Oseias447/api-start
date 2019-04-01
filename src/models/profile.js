@@ -8,8 +8,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     }
   }, {});
-  Profile.associate = function(models) {
-    // associations can be defined here
-  };
+  
   return Profile;
 };

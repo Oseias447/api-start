@@ -8,8 +8,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
     } 
   }, {});
-  UserRole.associate = function(models) {
-    // associations can be defined here
-  };
+  
   return UserRole;
 };

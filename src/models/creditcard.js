@@ -11,10 +11,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     } 
   }, {});
-  CreditCard.associate = function(models) {
-    CreditCard.belongsTo(models.Person, {
-      foreignKey: 'card_id',
-    });
-  };
+  
   return CreditCard;
 };
