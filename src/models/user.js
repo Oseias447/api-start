@@ -36,6 +36,19 @@ module.exports = (sequelize, DataTypes) => {
       }
     },  
   });
+
+  User.associate = function(models) {
+    User.hasOne(models.Profile, {
+      foreignKey: 'user_id',
+      as: 'profile',
+    });
+    User.belongsToMany(models.Role, {
+      through: 'UserRole',
+      as: 'roles',
+      foreignKey: 'user_id'
+    });
+  };
+  
   User.beforeCreate((user, options) => {
 
     return bcrypt.hash(user.password, 10)

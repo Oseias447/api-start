@@ -1,7 +1,10 @@
 const User = require('../models').User;
+const Profile = require('../models').Profile;
+const Role = require('../models').Role;
+const UserRole = require('../models').UserRole;
 
 module.exports = {
-  create(req, res) {
+  add(req, res) {
       return User
       .create({
         name: req.body.name,
@@ -12,16 +15,48 @@ module.exports = {
       .catch(error => res.status(400).send(error));
   },
   
-  index(req, res) {
+  list(req, res) {
       return User
-      .findAll()
+      .findAll({
+        include: [{
+          model: Profile,
+          as: 'profile'
+        },
+        {
+          model: Role,
+          as: 'roles'
+        }],
+      })
       .then(users => res.status(200).send(users))
       .catch(error => res.status(400).send(error));
-  }, 
+  },
+
+  getById(req, res) {
+    return User
+      .findByPk(req.params.id, {
+        include: [{
+          model: Profile,
+          as: 'profile'
+        },
+        {
+          model: Role,
+          as: 'roles'
+        }],
+      })
+      .then((user) => {
+        if (!user) {
+          return res.status(404).send({
+            message: 'User Not Found',
+          });
+        }
+        return res.status(200).send(user);
+      })
+      .catch((error) => res.status(400).send(error));
+  },
 
   update(req, res) {
       return User
-      .findByPk(req.params.userId,{
+      .findByPk(req.params.id,{
         attributes: ['id', 'name'],
       })
       .then(user => {
@@ -40,9 +75,9 @@ module.exports = {
       .catch((error) => res.status(400).send(error));
   },
 
-  destroy(req, res) {
+  delete(req, res) {
       return User
-      .findByPk(req.params.userId,{
+      .findByPk(req.params.id,{
         attributes: ['id', 'name'],
       })
       .then(user => {
